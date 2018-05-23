@@ -7,7 +7,7 @@
     tools:context=".view.MainActivity">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_heroes_list"
+        android:id="@+id/rvHeroesList"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

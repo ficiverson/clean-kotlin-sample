@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import test.kotlin.ficiverson.mycleankotlin.R
 import test.kotlin.ficiverson.mycleankotlin.model.SuperHeroe
-import java.util.*
 
 /**
  * Created by fernando souto on 30/01/2018.
@@ -17,15 +16,14 @@ import java.util.*
 
 class HeroesAdapter(private var presenter: MainPresenter?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-
-    private val superHeroes: MutableList<SuperHeroe>
-
+    var superHeroes: MutableList<SuperHeroe> = mutableListOf<SuperHeroe>()
+        set(value) {
+            field.clear()
+            field.addAll(value)
+            notifyDataSetChanged()
+        }
     init {
-        this.superHeroes = ArrayList<SuperHeroe>()
-    }
 
-    fun addAll(heroes: List<SuperHeroe>) {
-        superHeroes.addAll(heroes)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -39,7 +37,6 @@ class HeroesAdapter(private var presenter: MainPresenter?) : RecyclerView.Adapte
         superHeroViewHolder.render(superHero)
     }
 
-    override fun getItemCount(): Int {
-        return superHeroes.size
-    }
+    override fun getItemCount(): Int = superHeroes.size
+
 }

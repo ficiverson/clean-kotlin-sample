@@ -3,11 +3,11 @@ package test.kotlin.ficiverson.mycleankotlin.view
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.view.View
-import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.empty_state.*
 import test.kotlin.ficiverson.mycleankotlin.R
 import test.kotlin.ficiverson.mycleankotlin.model.SuperHeroe
+import test.kotlin.ficiverson.mycleankotlin.utils.setVisible
 
 
 interface MainView {
@@ -16,38 +16,30 @@ interface MainView {
 }
 
 class MainActivity : AppCompatActivity(), MainView {
-    private var mainPresenter: MainPresenter? = null
-    private lateinit var mRecyclerView: RecyclerView
-    private lateinit var mAdapter: HeroesAdapter
-    private lateinit var mLayoutManager: RecyclerView.LayoutManager
-    private lateinit var mEmptyText: TextView
+    private val mainPresenter: MainPresenter = MainPresenter(this)
+    private lateinit var adapter: HeroesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mRecyclerView = findViewById(R.id.rv_heroes_list);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mEmptyText = findViewById(R.id.tv_empty_list);
-
-        mainPresenter = MainPresenter(view = this)
-
-        mAdapter = HeroesAdapter(presenter = mainPresenter);
-        mRecyclerView.setAdapter(mAdapter);
+        adapter = HeroesAdapter(mainPresenter);
+        rvHeroesList.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(this@MainActivity);
+            adapter = this@MainActivity.adapter;
+        }
     }
 
     override fun onHeroeError() {
-        mRecyclerView.setVisibility(View.GONE);
-        mEmptyText.setVisibility(View.VISIBLE);
-        mEmptyText.setText("Not a super heroe this time");
+        rvHeroesList.setVisible(false)
+        tvEmptyList.setVisible(true)
+        tvEmptyList.text = "Not a super heroe this time";
     }
 
     override fun onHeroeLoaded(heroes: List<SuperHeroe>) {
         //show data
-        mAdapter.addAll(heroes);
-        mAdapter.notifyDataSetChanged();
+        adapter.superHeroes = heroes.toMutableList()
     }
 
 }
