@@ -12,10 +12,10 @@ import test.kotlin.ficiverson.mycleankotlin.network.NetWorkApi
 class SuperHeroeRemoteDataSource {
     private val url: String = "https://api.myjson.com/"
 
-    fun getHereoes(): List<SuperHeroe>? {
+    @Throws(Exception::class)
+    fun getHereoes(): List<SuperHeroe>?{
         val header: Map<String, String> = HashMap<String, String>()
         val heroeApi: HeroeAPI = NetWorkApi(url).provideApi(headers = header, clazz = HeroeAPI::class.java)
-
         val response: Response<SuperHeroeList> = heroeApi.getHeroes().execute()
         if (!response.isSuccessful) {
             throw Exception()

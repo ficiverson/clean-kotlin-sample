@@ -24,10 +24,8 @@ class HeroViewHolder(itemView: View, private val presenter: MainPresenter?) : Re
     }
 
     private fun hookListeners(marvelHero: SuperHeroe) {
-        itemView.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View) {
-                presenter?.onMarvelHeroClick(context, marvelHero)
-            }
-        })
+        itemView.setOnClickListener {
+            presenter?.onMarvelHeroClick(context, marvelHero)
+        }
     }
 }
