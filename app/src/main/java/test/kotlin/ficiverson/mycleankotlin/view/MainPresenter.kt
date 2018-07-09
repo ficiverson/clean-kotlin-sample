@@ -14,9 +14,9 @@ class MainPresenter(private val view: MainView) {
         fetchSuperHeroes(SuperHeroUseCase())
     }
 
-    fun fetchSuperHeroes(superHeroeUseCase: SuperHeroUseCase) {
-        superHeroeUseCase.execute() { (data, error) ->
-            data?.success?.let {
+    private fun fetchSuperHeroes(superHeroeUseCase: SuperHeroUseCase) {
+        superHeroeUseCase.execute {
+            it.data?.success?.let {
                 if (it.isNotEmpty()) {
                     view.onHeroeLoaded(it)
                 } else {

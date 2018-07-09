@@ -30,7 +30,7 @@ typealias Callback<T> = (T) -> Unit
 
 
 abstract class BaseInteractor<in U, T>(private val executor: InteractorExecutor) {
-    val handler = Handler(Looper.getMainLooper())
+    private val handler = Handler(Looper.getMainLooper())
 
     abstract fun execute(params: U? = null, callback: Callback<T>)
 
@@ -48,7 +48,7 @@ abstract class BaseInteractor<in U, T>(private val executor: InteractorExecutor)
         /**
          * Time to keep an idle thread if the size has expired.
          */
-        private val KEEP_ALIVE_TIME = 1L
+        private const val KEEP_ALIVE_TIME = 1L
 
         /**
          * The number unit in seconds to wait.

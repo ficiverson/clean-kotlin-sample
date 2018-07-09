@@ -1,8 +1,6 @@
 package test.kotlin.ficiverson.mycleankotlin.data
 
-import retrofit2.Response
 import test.kotlin.ficiverson.mycleankotlin.model.SuperHeroe
-import test.kotlin.ficiverson.mycleankotlin.model.SuperHeroeList
 import test.kotlin.ficiverson.mycleankotlin.network.HeroeAPI
 import test.kotlin.ficiverson.mycleankotlin.network.NetWorkApi
 
@@ -13,10 +11,9 @@ class SuperHeroeRemoteDataSource {
     private val url: String = "https://api.myjson.com/"
 
     @Throws(Exception::class)
-    fun getHereoes(): List<SuperHeroe>?{
-        val header: Map<String, String> = HashMap<String, String>()
-        val heroeApi: HeroeAPI = NetWorkApi(url).provideApi(headers = header, clazz = HeroeAPI::class.java)
-        val response: Response<SuperHeroeList> = heroeApi.getHeroes().execute()
+    fun getHereoes(): List<SuperHeroe>? {
+        val heroeApi = NetWorkApi(url).provideApi(clazz = HeroeAPI::class.java)
+        val response = heroeApi.getHeroes().execute()
         if (!response.isSuccessful) {
             throw Exception()
         }

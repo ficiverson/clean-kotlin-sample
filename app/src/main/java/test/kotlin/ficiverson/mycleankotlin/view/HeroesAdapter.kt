@@ -1,9 +1,5 @@
 package test.kotlin.ficiverson.mycleankotlin.view
 
-/**
- * Created by f.souto.gonzalez on 23/05/2018.
- */
-
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,27 +10,25 @@ import test.kotlin.ficiverson.mycleankotlin.model.SuperHeroe
  * Created by fernando souto on 30/01/2018.
  */
 
-class HeroesAdapter(private var presenter: MainPresenter?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HeroesAdapter(private var presenter: MainPresenter?) : RecyclerView.Adapter<HeroViewHolder>() {
 
-    var superHeroes: MutableList<SuperHeroe> = mutableListOf<SuperHeroe>()
+    var superHeroes = mutableListOf<SuperHeroe>()
         set(value) {
             field.clear()
             field.addAll(value)
             notifyDataSetChanged()
         }
-    init {
 
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeroViewHolder =
+        HeroViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.marvel_hero_row, parent, false),
+            presenter
+        )
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.marvel_hero_row, parent, false)
-        return HeroViewHolder(view, presenter)
-    }
+    override fun getItemId(position: Int): Long = superHeroes[position].hashCode().toLong()
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val superHeroViewHolder = holder as HeroViewHolder
-        val superHero = superHeroes[position]
-        superHeroViewHolder.render(superHero)
+    override fun onBindViewHolder(holder: HeroViewHolder, position: Int) {
+        holder.render(superHeroes[position])
     }
 
     override fun getItemCount(): Int = superHeroes.size
