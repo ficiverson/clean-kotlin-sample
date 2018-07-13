@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity(), MainView {
 
     override fun onHeroeError() {
         rvHeroesList.visible()
-        emptyList.gone()
-        emptyList.text = "Not a super heroe this time"
+        tvEmptyList.gone()
+        tvEmptyList.text = "Not a super heroe this time"
     }
 
     override fun onHeroeLoaded(heroes: List<SuperHeroe>) {

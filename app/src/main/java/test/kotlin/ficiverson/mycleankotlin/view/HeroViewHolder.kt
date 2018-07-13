@@ -15,8 +15,8 @@ class HeroViewHolder(item: View, private val presenter: MainPresenter?) : Recycl
         hookListeners(marvelHero)
         Picasso.with(itemView.context)
             .load(marvelHero.photo)
-            .into(itemView.heroImage)
-        itemView.heroName.text = marvelHero.name
+            .into(itemView.imHeroImage)
+        itemView.tvHeroName.text = marvelHero.name
     }
 
     private fun hookListeners(marvelHero: SuperHeroe) {
