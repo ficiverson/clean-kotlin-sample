@@ -11,14 +11,14 @@ import test.kotlin.ficiverson.mycleankotlin.model.SuperHereoeResponse
 class SuperHeroesRepository(private val dataSource: SuperHeroeRemoteDataSource) {
 
     fun getHereoes(policy: DataPolicy): Result<SuperHereoeResponse> {
-        try {
+        return try {
             when (policy) {
-                DataPolicy.LOCAL -> return Result(data = null, error = Exception())
-                DataPolicy.NETWORK -> return Result(data = SuperHereoeResponse(status = Status.SUCCESS, success = dataSource.getHereoes()))
-                DataPolicy.NETWORK_AND_LOCAL -> return Result(data = SuperHereoeResponse(status = Status.SUCCESS, success = dataSource.getHereoes()))
+                DataPolicy.LOCAL -> Result(error = Exception())
+                DataPolicy.NETWORK -> Result(SuperHereoeResponse(Status.SUCCESS, dataSource.getHereoes()))
+                DataPolicy.NETWORK_AND_LOCAL -> Result(SuperHereoeResponse(Status.SUCCESS, dataSource.getHereoes()))
             }
         } catch (e: Exception) {
-            return Result(data = null, error = Exception())
+            Result(error = Exception())
         }
     }
 }

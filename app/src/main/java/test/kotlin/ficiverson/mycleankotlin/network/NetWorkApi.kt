@@ -15,7 +15,6 @@ class NetWorkApi(private val baseUrl: String) {
         private const val OK_HTTP_TIMEOUT = 30L
     }
 
-
     fun <T> provideApi(headers: Map<String, String>? = null, clazz: Class<T>): T {
         val retrofitBuilder = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
@@ -23,7 +22,7 @@ class NetWorkApi(private val baseUrl: String) {
         return retrofitBuilder.baseUrl(baseUrl).build().create(clazz)
     }
 
-    fun providesOkHttpClient(): OkHttpClient {
+    private fun providesOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder().apply {
 
             val uriUrl = Uri.parse(baseUrl)

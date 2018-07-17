@@ -2,12 +2,12 @@ package test.kotlin.ficiverson.mycleankotlin.view
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.empty_state.*
 import test.kotlin.ficiverson.mycleankotlin.R
 import test.kotlin.ficiverson.mycleankotlin.model.SuperHeroe
-import test.kotlin.ficiverson.mycleankotlin.utils.setVisible
+import test.kotlin.ficiverson.mycleankotlin.utils.gone
+import test.kotlin.ficiverson.mycleankotlin.utils.visible
 
 
 interface MainView {
@@ -23,18 +23,19 @@ class MainActivity : AppCompatActivity(), MainView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        adapter = HeroesAdapter(mainPresenter);
+        adapter = HeroesAdapter(mainPresenter)
         rvHeroesList.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this@MainActivity);
-            adapter = this@MainActivity.adapter;
+            adapter = this@MainActivity.adapter.apply {
+                setHasStableIds(true)
+            }
         }
     }
 
     override fun onHeroeError() {
-        rvHeroesList.setVisible(false)
-        tvEmptyList.setVisible(true)
-        tvEmptyList.text = "Not a super heroe this time";
+        rvHeroesList.visible()
+        tvEmptyList.gone()
+        tvEmptyList.text = "Not a super heroe this time"
     }
 
     override fun onHeroeLoaded(heroes: List<SuperHeroe>) {
